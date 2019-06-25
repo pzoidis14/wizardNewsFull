@@ -20,6 +20,11 @@ a {
   text-decoration: none;
 }
 
+header a {
+  color: #fff;
+  text-decoration: none;
+}
+
 small {
   color: #828282;
 }
@@ -46,19 +51,18 @@ form {
 label {
   float: left;
   width: 60px;
-  
 }
 
 input {
   display: block;
   width: calc(100% - 60px);
-  padding:4px 2px;
+  padding: 4px 2px;
   margin: 0 0 10px 0;
-  border:solid 1px #aacfe4;
+  border: solid 1px #aacfe4;
 }
 
 textarea {
-  border:solid 1px #aacfe4;
+  border: solid 1px #aacfe4;
   width: 100%;
 }
 
@@ -68,7 +72,6 @@ textarea {
   margin: 12px auto;
   padding-bottom: 25px;
 }
-
 
 .news-item {
   padding: 0 15px;
