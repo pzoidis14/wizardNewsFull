@@ -1,68 +1,27 @@
-const { list, find } = require('../');
-
+const { postList, postDetails } = require('../../views');
+const { client } = require('../');
 const express = require('express');
 const router = express();
 
-router.get('/', (req, res) => {
-  const posts = list();
-  const html = `<!DOCTYPE html>
-  <html>
-  <head>
-    <title>Wizard News</title>
-    <link rel="stylesheet" href="/style.css" />
-  </head>
-  <body>
-    <div class="news-list">
-      <header><img src="/logo.png"/>Wizard News</header>
-      ${posts
-        .map(
-          post => `
-        <div class='news-item'>
-          <p>
-            <span class="news-position">${post.id}. ▲</span>
-            <a href="/posts/${post.id}">${post.title}</a>
-            <small>(by ${post.name})</small>
-          </p>
-          <small class="news-info">
-            ${post.upvotes} upvotes | ${post.date}
-          </small>
-        </div>`
-        )
-        .join('')}
-    </div>
-  </body>
-</html>`;
-  res.send(html);
+router.get('/', async (req, res) => {
+  try {
+    const data = await client.query('SELECT * FROM posts');
+    const posts = data.rows;
+    res.send(postList(posts));
+  } catch (err) {
+    console.error(err);
+    res.status(500).send(`Something went wrong: ${err}`);
+  }
 });
 
-router.get('/posts/:id', (req, res, next) => {
+router.get('/posts/:id', async (req, res, next) => {
   try {
-    const post = find(req.params.id);
-    const html = `<!DOCTYPE html>
-  <html>
-  <head>
-    <title>Wizard News</title>
-    <link rel="stylesheet" href="/style.css" />
-  </head>
-  <body>
-    <div class="news-list">
-      <header>
-        <img src="/logo.png"/>
-        <a href="/">Wizard News</a>
-      </header>
-      <div class='news-item'>
-        <p>
-          <span class="news-position"></span>${post.title}
-          <small>(by ${post.name})</small>
-        </p>
-        <p>${post.content}</p>
-      </div>
-    </div>
-  </body>
-</html>`;
-    res.send(html);
+    const data = await client.query('SELECT * FROM posts WHERE ');
+    const posts = data.rows;
+    res.send(postDetails(posts));
   } catch (err) {
-    next(err);
+    console.error(err);
+    res.status(500).send(`Something went wrong: ${err}`);
   }
 });
 

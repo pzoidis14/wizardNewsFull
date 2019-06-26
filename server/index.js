@@ -1,4 +1,4 @@
-const { list, find } = require('./db/postBank.js');
 const router = require('./api');
+const client = require('./db');
 
-module.exports = { list, find, router };
+module.exports = { router, client };
