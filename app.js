@@ -1,22 +1,22 @@
 const express = require('express');
 const app = express();
 const morgan = require('morgan');
-var bodyParser = require('body-parser');
+const bodyParser = require('body-parser');
 
 const PORT = 1337;
 
 app.use(morgan('dev'));
-
 app.use(
   bodyParser.urlencoded({
     extended: true,
   })
 );
 app.use(bodyParser.json());
-
 app.use(express.static('./public'));
 
-app.use('/', require('./server/api'));
+app.get('/', (req, res) => res.redirect('/posts'));
+
+app.use('/posts', require('./server/api'));
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
